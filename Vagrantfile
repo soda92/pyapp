@@ -84,11 +84,13 @@ Vagrant.configure("2") do |config|
   #   pip install pyoxidizer
   #   SHELL
   config.vm.provision "shell", inline: <<-SHELL
+    apt update
     apt install python3-pip
     # pacman -Syu python-pip libxcrypt-compat --needed --noconfirm
     su vagrant
     export PATH=~/.local/bin:$PATH
     echo 'export PATH=~/.local/bin:$PATH' >> ~/.bashrc
+    source ~/.bashrc
     pip3 install -U pip
     pip3 install pyoxidizer
     SHELL
