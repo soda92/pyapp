@@ -13,7 +13,8 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   # glibc not compatitable. TODO: use archlinux on host or use ubuntu to build.
-  config.vm.box = "archlinux/archlinux"
+  # config.vm.box = "archlinux/archlinux"
+  config.vm.box = "ubuntu/focal64"
   if Vagrant.has_plugin?("vagrant-proxyconf")
     config.proxy.http     = "http://192.168.56.1:10809"
     config.proxy.https    = "http://192.168.56.1:10809"
@@ -74,13 +75,23 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   pacman -Syu python-pip libxcrypt-compat --needed --noconfirm
+  #   su vagrant
+  #   export PATH=$PATH:~/.local/bin/
+  #   echo 'export PATH=$PATH:~/.local/bin/' >> ~/.bashrc
+  #   pip install -U pip
+  #   pip install pyoxidizer
+  #   SHELL
   config.vm.provision "shell", inline: <<-SHELL
-    pacman -Syu python-pip libxcrypt-compat --needed --noconfirm
+    apt install python3-pip
+    # pacman -Syu python-pip libxcrypt-compat --needed --noconfirm
     su vagrant
-    export PATH=$PATH:~/.local/bin/
-    echo 'export PATH=$PATH:~/.local/bin/' >> ~/.bashrc
-    pip install -U pip
-    pip install pyoxidizer
+    export PATH=~/.local/bin:$PATH
+    echo 'export PATH=~/.local/bin:$PATH' >> ~/.bashrc
+    pip3 install -U pip
+    pip3 install pyoxidizer
     SHELL
+    # cd /vagrant
     # pyoxidizer build install
 end
