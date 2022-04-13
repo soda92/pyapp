@@ -14,12 +14,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - run: |
-        sudo apt update
-        sudo apt install python3-pip -y
-        pip3 install -U pip
-        export PATH=~/.local/bin:$PATH
-        pip3 install pyoxidizer
-        pyoxidizer build install
+          sudo apt update
+          sudo apt install python3-pip -y
+          pip3 install -U pip
+          export PATH=~/.local/bin:$PATH
+          pip3 install pyoxidizer
+          pyoxidizer build install
 
       - name: Upload Distributions
         uses: actions/upload-artifact@v2
