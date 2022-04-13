@@ -213,9 +213,9 @@ def make_exe():
         # If no argument passed, the default `PythonInterpreterConfig` is used.
         config=python_config,
     )
-    for resource in exe.pip_install(["PyQt6"]):
-        resource.add_location = "in-memory"
-        exe.add_python_resource(resource)
+    # for resource in exe.pip_install(["PyQt6"]):
+    #     resource.add_location = "filesystem-relative:lib"
+    #     exe.add_python_resource(resource)
 
     exe.add_python_resources(exe.read_package_root(CWD, ["package"]))
 
@@ -256,7 +256,7 @@ def make_exe():
 
     # Invoke `pip install` using a requirements file and add the collected resources
     # to our binary.
-    #exe.add_python_resources(exe.pip_install(["-r", "requirements.txt"]))
+    exe.add_python_resources(exe.pip_install(["-r", "requirements.txt"]))
 
 
     # Read Python files from a local directory and add them to our embedded
